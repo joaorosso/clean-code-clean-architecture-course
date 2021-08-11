@@ -1,7 +1,9 @@
 export default class PlaceOrderOutput {
   total: number;
+  freight: number;
 
-  constructor({ total }: { total: number }) {
+  constructor({ freight, total }: { freight: number, total: number }) {
+    this.freight = freight;
     this.total = total;
   }
 }
