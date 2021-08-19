@@ -1,11 +1,11 @@
-import CouponRepository from "./CouponRepository";
-import CouponRepositoryMemory from "./CouponRepositoryMemory";
-import ItemRepository from "./ItemRepository";
-import ItemRepositoryMemory from "./ItemRepositoryMemory";
-import OrderRepositoryMemory from "./OrderRepositoryMemory";
-import PlaceOrder from "./PlaceOrder";
-import PlaceOrderInput from "./PlaceOrderInput";
-import ZipcodeCalculatorAPIMemory from "./ZipcodeCalculatorAPIMemory";
+import ItemRepositoryMemory from "../../src//infra/repository/memory/ItemRepositoryMemory";
+import PlaceOrder from "../../src/application/PlaceOrder";
+import PlaceOrderInput from "../../src/application/PlaceOrderInput";
+import CouponRepository from "../../src/domain/repository/CouponRepository";
+import ItemRepository from "../../src/domain/repository/ItemRepository";
+import ZipcodeCalculatorAPIMemory from "../../src/infra/gateway/memory/ZipcodeCalculatorAPIMemory";
+import CouponRepositoryMemory from "../../src/infra/repository/memory/CouponRepositoryMemory";
+import OrderRepositoryMemory from "../../src/infra/repository/memory/OrderRepositoryMemory";
 
 let itemRepository: ItemRepository;
 let couponRepository: CouponRepository;

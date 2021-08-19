@@ -1,5 +1,5 @@
-import Coupon from './Coupon';
-import Order from './Order';
+import Coupon from '../../src/domain/entity/Coupon';
+import Order from '../../src/domain/entity/Order';
 
 test('should not create an order with invalid CPF', () => {
   const cpf = '111.111.111-11';

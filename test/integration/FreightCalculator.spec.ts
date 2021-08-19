@@ -1,5 +1,5 @@
-import FreightCalculator from "./FreightCalculator";
-import Item from "./Item";
+import FreightCalculator from "../../src/domain/service/FreightCalculator";
+import Item from "../../src/domain/entity/Item";
 
 test('should calculate the amp freight', () => {
   const item = new Item('1', 'Amp', 5000, 50, 50, 50, 22);
