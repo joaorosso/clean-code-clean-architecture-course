@@ -21,11 +21,12 @@ export default class PlaceOrder {
     this.zipcodeCalculator = zipcodeCalculator;
   }
 
-  execute(input: PlaceOrderInput): PlaceOrderOutput {
-    const order = new Order(input.cpf);
+  async execute(input: PlaceOrderInput): Promise<PlaceOrderOutput> {
+    const sequence = this.orderRepository.count() + 1;
+    const order = new Order(input.cpf, input.issueDate, sequence);
     const distance = this.zipcodeCalculator.calculate(input.zipcode, '99.999-999');
     for (const orderItem of input.items) {
-      const item = this.itemRepository.getById(orderItem.id);
+      const item = await this.itemRepository.getById(orderItem.id);
       if (!item) throw new Error('Item not found');
       order.addItem(orderItem.id, item.price, orderItem.quantity);
       order.freight += FreightCalculator.calculate(distance, item) * orderItem.quantity;
@@ -37,6 +38,7 @@ export default class PlaceOrder {
     const total = order.getTotal();
     this.orderRepository.save(order);
     return new PlaceOrderOutput({
+      code: order.code.value,
       freight: order.freight,
       total
     });
