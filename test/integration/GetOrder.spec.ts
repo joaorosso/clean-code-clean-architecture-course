@@ -30,7 +30,7 @@ test('should consult an order', async () => {
       { id: '2', quantity: 1 },
       { id: '3', quantity: 3 }
     ],
-    coupon: 'DISC20'
+    coupon: 'VALE20'
   });
   const placeOrder = new PlaceOrder(itemRepository, couponRepository, orderRepository, zipcodeCalculator);
   const output = await placeOrder.execute(input);

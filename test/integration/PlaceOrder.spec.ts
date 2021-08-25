@@ -4,8 +4,8 @@ import CouponRepository from "../../src/domain/repository/CouponRepository";
 import ItemRepository from "../../src/domain/repository/ItemRepository";
 import PgPromiseDatabase from "../../src/infra/database/PgPromiseDatabase";
 import ZipcodeCalculatorAPIMemory from "../../src/infra/gateway/memory/ZipcodeCalculatorAPIMemory";
+import CouponRepositoryDatabase from "../../src/infra/repository/database/CouponRepositoryDatabase";
 import ItemRepositoryDatabase from "../../src/infra/repository/database/ItemRepositoryDatabase";
-import CouponRepositoryMemory from "../../src/infra/repository/memory/CouponRepositoryMemory";
 import OrderRepositoryMemory from "../../src/infra/repository/memory/OrderRepositoryMemory";
 
 let itemRepository: ItemRepository;
@@ -15,7 +15,7 @@ let zipcodeCalculator: ZipcodeCalculatorAPIMemory;
 
 beforeEach(() => {
   itemRepository = new ItemRepositoryDatabase(PgPromiseDatabase.getInstance());
-  couponRepository = new CouponRepositoryMemory();
+  couponRepository = new CouponRepositoryDatabase(PgPromiseDatabase.getInstance());
   orderRepository = new OrderRepositoryMemory();
   zipcodeCalculator = new ZipcodeCalculatorAPIMemory();
 });
@@ -29,7 +29,7 @@ test('should place order', async () => {
       { id: '2', quantity: 1 },
       { id: '3', quantity: 3 }
     ],
-    coupon: 'DISC20'
+    coupon: 'VALE20'
   });
   const placeOrder = new PlaceOrder(itemRepository, couponRepository, orderRepository, zipcodeCalculator);
   const output = await placeOrder.execute(input);
@@ -45,7 +45,7 @@ test('should place order with espired discount coupon', async () => {
       { id: '2', quantity: 1 },
       { id: '3', quantity: 3 }
     ],
-    coupon: 'DISC20_EXPIRED'
+    coupon: 'VALE20_EXPIRED'
   });
   const placeOrder = new PlaceOrder(itemRepository, couponRepository, orderRepository, zipcodeCalculator);
   const output = await placeOrder.execute(input);
@@ -61,7 +61,7 @@ test('should place order with freight', async () => {
       { id: '2', quantity: 1 },
       { id: '3', quantity: 3 }
     ],
-    coupon: 'DISC20_EXPIRED'
+    coupon: 'VALE20_EXPIRED'
   });
   const placeOrder = new PlaceOrder(itemRepository, couponRepository, orderRepository, zipcodeCalculator);
   const output = await placeOrder.execute(input);
@@ -78,7 +78,7 @@ test('should place order calculating the code', async () => {
       { id: '3', quantity: 3 }
     ],
     issueDate: new Date('2020-10-10'),
-    coupon: 'DISC20_EXPIRED'
+    coupon: 'VALE20_EXPIRED'
   });
   const placeOrder = new PlaceOrder(itemRepository, couponRepository, orderRepository, zipcodeCalculator);
   const output = await placeOrder.execute(input);
