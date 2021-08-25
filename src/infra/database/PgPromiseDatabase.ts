@@ -16,10 +16,15 @@ export default class PgPromiseDatabase implements Database {
     return this.instance;
   }
 
-  many(query: string, parameters: any) {
+  many(query: string, parameters: any): any {
     return this.pgp.query(query, parameters);
   }
-  one(query: string, parameters: any) {
+
+  one(query: string, parameters: any): any {
     return this.pgp.oneOrNone(query, parameters);
+  }
+
+  none(query: string, parameters: any): void {
+    return this.pgp.none(query, parameters);
   }
 }

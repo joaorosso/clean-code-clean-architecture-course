@@ -1,23 +1,22 @@
 import PlaceOrder from "../../src/application/PlaceOrder";
 import PlaceOrderInput from "../../src/application/PlaceOrderInput";
-import CouponRepository from "../../src/domain/repository/CouponRepository";
-import ItemRepository from "../../src/domain/repository/ItemRepository";
 import PgPromiseDatabase from "../../src/infra/database/PgPromiseDatabase";
 import ZipcodeCalculatorAPIMemory from "../../src/infra/gateway/memory/ZipcodeCalculatorAPIMemory";
 import CouponRepositoryDatabase from "../../src/infra/repository/database/CouponRepositoryDatabase";
 import ItemRepositoryDatabase from "../../src/infra/repository/database/ItemRepositoryDatabase";
-import OrderRepositoryMemory from "../../src/infra/repository/memory/OrderRepositoryMemory";
+import OrderRepositoryDatabase from "../../src/infra/repository/database/OrderRepositoryDatabase";
 
-let itemRepository: ItemRepository;
-let couponRepository: CouponRepository;
-let orderRepository: OrderRepositoryMemory;
+let itemRepository: ItemRepositoryDatabase;
+let couponRepository: CouponRepositoryDatabase;
+let orderRepository: OrderRepositoryDatabase;
 let zipcodeCalculator: ZipcodeCalculatorAPIMemory;
 
-beforeEach(() => {
+beforeEach(async () => {
   itemRepository = new ItemRepositoryDatabase(PgPromiseDatabase.getInstance());
   couponRepository = new CouponRepositoryDatabase(PgPromiseDatabase.getInstance());
-  orderRepository = new OrderRepositoryMemory();
+  orderRepository = new OrderRepositoryDatabase(PgPromiseDatabase.getInstance());
   zipcodeCalculator = new ZipcodeCalculatorAPIMemory();
+  await orderRepository.clean();
 });
 
 test('should place order', async () => {
