@@ -19,7 +19,6 @@ export default class OrderRepositoryDatabase implements OrderRepository {
 
   async get(code: string): Promise<Order> {
     const orderData = await this.database.one('select * from ccca.order where code = $1', [code]);
-    console.log('orderData', orderData);
     const ordersItemsData = await this.database.many('select * from ccca.order_item where id_order = $1', [orderData.id]);
     const order = new Order(orderData.cpf, new Date(orderData.issue_date), orderData.serial);
     for (const orderItemData of ordersItemsData) {

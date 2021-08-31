@@ -11,7 +11,7 @@ export default class ExpressHttp implements Http {
 
   async on(method: string, url: string, fn: any): Promise<void> {
     this.app[method](this.convertUrl(url), async (req: any, res: any) => {
-      const data = await fn(req.params, req.body,);
+      const data = await fn(req.params, req.body);
       res.json(data);
     });
   }
