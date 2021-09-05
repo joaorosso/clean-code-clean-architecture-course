@@ -19,7 +19,7 @@ export default class PlaceOrder {
     const order = await this.orderRepository.get(code);
     const orderItems: any[] = [];
     for (const orderItem of order.items) {
-      const item = await this.itemRepository.getById(orderItem.id);
+      const item = await this.itemRepository.getById(orderItem.idItem);
       const orderItemOutput = {
         itemDescription: item?.description,
         price: orderItem.price,
@@ -30,6 +30,7 @@ export default class PlaceOrder {
     return new GetOrderOutput({
       code: order.code.value,
       freight: order.freight,
+      taxes: order.taxes,
       total: order.getTotal(),
       orderItems
     });
